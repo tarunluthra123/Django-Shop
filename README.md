@@ -170,3 +170,65 @@ Returns a JSON object of the newly added product
 }
 ```
 </details>
+
+
+### Orders
+<details>
+<summary>
+1. Fetch all orders of current user
+</summary>
+
+**Type** : GET
+
+`/api/orders/`
+
+**Protected Route** - Requires Auth Token
+
+No body is required. Auth Token is sufficient.
+
+#### Response
+Returns an array of orders.
+
+**Sample success response**
+Status = 200 OK
+```json
+[
+  {
+    "id": 1,
+    "product": {
+      "id": 1,
+      "title": "Lenovo Legion 5",
+      "description": "4th Gen AMD Ryzen 5 (4600H) | Speed: 3.0 GHz (Base) - 4.0 GHz (Max) | 6 Cores | 8MB Cache",
+      "price": 67990,
+      "createdAt": "2021-05-28T18:49:06.432533Z",
+      "stock": 100,
+      "rating": 5,
+      "imageUrl": "/61ItfhQmaFL._SL1000__UUDJG5K.jpg",
+      "seller": 2
+    },
+    "delivered": false,
+    "createdAt": "2021-05-28T18:50:46.084946Z",
+    "user": 3
+  }
+]
+```
+
+**Sample Failure Response**
+In case of invalid auth token
+
+Status = 401 Unauthorized
+```json
+{
+  "detail": "Given token not valid for any token type",
+  "code": "token_not_valid",
+  "messages": [
+    {
+      "token_class": "AccessToken",
+      "token_type": "access",
+      "message": "Token is invalid or expired"
+    }
+  ]
+}
+```
+
+</details>

@@ -27,5 +27,21 @@ class ProductCreateView(CreateAPIView):
 
 class OrdersView(ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
+
+    def list(self, request, *args, **kwargs):
+        username = request.user
+        orders = models.Order.objects.filter(user=username)
+        serializer = self.serializer_class(orders, many=True)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        productId = request.body['productId']
+        product = models.Product.objects.filter(id=productId)
+        serializer = self.serializer_class()
+
+    def get_queryset(self):
+        return models.Order.objects.all()
+
+

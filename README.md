@@ -136,7 +136,9 @@ Status = 200 OK
 ```
 
 **Sample Success Response**
+
 Returns a JSON object of the newly added product
+
 **Status** = 201 Created
 ```json
 {
@@ -230,5 +232,119 @@ Status = 401 Unauthorized
   ]
 }
 ```
+
+</details>
+
+
+<details>
+<summary>
+2. Create a new order
+</summary>
+
+**Type** : POST
+
+`/api/orders/`
+
+**Protected Route** - Requires Auth Token
+
+**Request Body**
+productId = id of the product that needs to be ordered
+
+`Fetches user details from auth token`
+
+**Sample Request**
+```json
+{
+    "productId": 2
+}
+```
+
+
+#### Responses
+
+
+**Success Response**
+
+**Status** = 201 Created
+
+Returns the newly created order object
+
+```json
+{
+  "id": 2,
+  "user": 3,
+  "product": 2,
+  "product_detail": {
+    "id": 2,
+    "title": "Lenovo IdeaPad Slim 5",
+    "description": "AMD Ryzen 7 4700U Processor; Base speed: 2.0Ghz, Max Speed: 4.1GHz, 8 Cores, 8 Threads, 8MB Smart Cache\r\n14 inch screen with (1920x1080) full hd display | Anti glare technology | IPS Panel Switching | 300 Nits",
+    "price": 59990,
+    "createdAt": "2021-05-28T18:50:19.232135Z",
+    "stock": 100,
+    "rating": 5,
+    "imageUrl": "/61LiK6CvJHL._SL1000_.jpg",
+    "seller": 2
+  },
+  "delivered": false,
+  "createdAt": "2021-05-29T08:43:39.948620Z"
+}
+```
+
+**Failure Responses**
+- In case of invalid auth token
+  **Status** = 401 Unauthorized
+```json
+{
+  "detail": "Given token not valid for any token type",
+  "code": "token_not_valid",
+  "messages": [
+    {
+      "token_class": "AccessToken",
+      "token_type": "access",
+      "message": "Token is invalid or expired"
+    }
+  ]
+}
+```
+
+- In case of incorrect field
+  **Status** = 400 Bad Request
+```json
+{
+  "detail": "productId Field missing",
+  "code": "missing_field"
+}
+```
+
+- In case of out of bounds productId
+  **Status** = 400 Bad Request
+```json
+{
+  "detail": "Could not create new order",
+  "code": "error_creating_new_order",
+  "errors": {
+    "product": [
+      "Invalid pk \"10\" - object does not exist."
+    ]
+  }
+}
+```
+
+- In case of invalid auth token
+  **Status** = 401 Unauthorized
+```json
+{
+  "detail": "Given token not valid for any token type",
+  "code": "token_not_valid",
+  "messages": [
+    {
+      "token_class": "AccessToken",
+      "token_type": "access",
+      "message": "Token is invalid or expired"
+    }
+  ]
+}
+```
+
 
 </details>

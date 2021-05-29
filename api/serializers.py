@@ -10,8 +10,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(read_only=True)
+    product_detail = ProductSerializer(read_only=True, source='product')
 
     class Meta:
-        fields = '__all__'
+        fields = (
+            'id', 'user', 'product', 'product_detail', 'delivered', 'createdAt'
+        )
         model = models.Order

@@ -37,11 +37,22 @@ class OrdersView(ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         user = request.user
-        productId = request.body['productId']
-        product = models.Product.objects.filter(id=productId)
-        serializer = self.serializer_class()
+        if 'productId' not in request.data:
+            return Response({"detail": "productId Field missing", "code": "missing_field"}, status=400)
+        productId = request.data['productId']
+        new_order = {
+            "product": productId,
+            "user": user.id,
+            "delivered": False
+        }
+        serializer = self.serializer_class(data=new_order)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response({"detail": "Could not create new order", "code": "error_creating_new_order",
+                             "errors": serializer.errors}, status=400)
 
     def get_queryset(self):
         return models.Order.objects.all()
-
-

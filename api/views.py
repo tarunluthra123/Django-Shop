@@ -1,5 +1,6 @@
-from rest_framework.generics import (CreateAPIView, ListAPIView, ListCreateAPIView)
-from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
+from rest_framework.generics import (ListCreateAPIView, CreateAPIView, RetrieveUpdateAPIView)
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,15 +15,10 @@ class HelloView(APIView):
         return Response(content)
 
 
-class ProductsListView(ListAPIView):
+class ProductsListView(ListCreateAPIView):
     serializer_class = serializers.ProductSerializer
     queryset = models.Product.objects.all()
-
-
-class ProductCreateView(CreateAPIView):
-    serializer_class = serializers.ProductSerializer
-    queryset = models.Product.objects.all()
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class OrdersView(ListCreateAPIView):
@@ -56,3 +52,28 @@ class OrdersView(ListCreateAPIView):
 
     def get_queryset(self):
         return models.Order.objects.all()
+
+
+class CreateNewUserView(CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = serializers.RegisterSerializer
+
+
+class RetrieveUpdateUserView(RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = serializers.RegisterSerializer
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        response = {
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email
+        }
+        return Response(response, status=200)
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        return queryset

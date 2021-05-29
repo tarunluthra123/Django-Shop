@@ -1,4 +1,10 @@
+from datetime import timedelta
 from pathlib import Path
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -87,6 +93,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# JWT Auth
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ALGORITHM': 'HS512',
+    'SIGNING_KEY': env('JWT_SECRET_KEY')
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

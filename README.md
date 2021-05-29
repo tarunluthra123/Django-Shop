@@ -82,6 +82,85 @@ Accepts a JSON object with refresh token
 ```
 </details>
 
+<details>
+<summary>
+3. Create a new user
+</summary>
+
+**TYPE** : POST
+`/api/register/`
+
+Creates a new user
+Takes the following parameters as arguments
+- username
+- email
+- password
+- password2
+- first_name
+- last_name
+
+**Sample request**
+```json
+{
+    "username" : "madara",
+    "email" : "madara@uchiha.com",
+    "first_name" : "Madara",
+    "last_name" : "Uchiha",
+    "password" : "kyuubi123",
+    "password2" : "kyuubi123"
+}
+```
+
+**Success Response**
+
+**Status** = 201 Created
+
+```json
+{
+  "username": "madara",
+  "email": "madara@uchiha.com",
+  "first_name": "Madara",
+  "last_name": "Uchiha"
+}
+```
+
+**Failure**
+
+**Status** = 400 Bad Request
+
+Several validators are set in place to prevent incorrect user being formed. You will receive errors if those validations are not fulfilled.
+
+</details>
+
+
+<details>
+<summary>
+4. Get user info from auth token
+</summary>
+Allows user to fetch their info using their auth token.
+
+**Type** - GET
+`/api/user/`
+
+**Protected Route**
+
+No request body is required. Auth token is enough.
+
+**Sample response**
+
+**Status** = 200 OK
+
+```json
+{
+  "username": "madara",
+  "first_name": "Madara",
+  "last_name": "Uchiha",
+  "email": "madara@uchiha.com"
+}
+```
+
+
+</details>
 
 ### Products
 
@@ -119,7 +198,7 @@ Status = 200 OK
 
 **Type:** POST
 
-`/api/product/create/`
+`/api/products/`
 
 **Note:** This is a protected route i.e. user must be authorized. Provide your Auth Token in the 'Authorization' header as 'Bearer ${token_here}'.
 
@@ -172,6 +251,14 @@ Returns a JSON object of the newly added product
 }
 ```
 </details>
+
+<!-- <details>
+<summary> -->
+3. Get product details from ID
+<!-- </summary>
+
+
+</details> -->
 
 
 ### Orders

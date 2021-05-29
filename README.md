@@ -252,13 +252,50 @@ Returns a JSON object of the newly added product
 ```
 </details>
 
-<!-- <details>
-<summary> -->
+<details>
+<summary>
 3. Get product details from ID
-<!-- </summary>
+</summary>
+Fetch product details using product_id.
+
+**Type** = GET
+
+`/api/product/<product_id>`
+
+Put the product_id in the above URL to fetch the details of the product of that ID.
+
+**Sample Success Response**
+
+**Status** = 200 OK
+
+```json
+{
+  "id": 2,
+  "title": "Lenovo IdeaPad Slim 5",
+  "description": "AMD Ryzen 7 4700U Processor; Base speed: 2.0Ghz, Max Speed: 4.1GHz, 8 Cores, 8 Threads, 8MB Smart Cache\r\n14 inch screen with (1920x1080) full hd display | Anti glare technology | IPS Panel Switching | 300 Nits",
+  "price": 59990,
+  "createdAt": "2021-05-28T18:50:19.232135Z",
+  "stock": 100,
+  "rating": 5,
+  "imageUrl": "http://localhost:8000/61LiK6CvJHL._SL1000_.jpg",
+  "seller": 2
+}
+```
+
+**Sample Failure Response**
+
+In case of invalid product_id
+
+**Status** = 404 Not Found
+
+```json
+{
+  "detail": "Not found."
+}
+```
 
 
-</details> -->
+</details>
 
 
 ### Orders

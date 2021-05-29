@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework.generics import (ListCreateAPIView, CreateAPIView, RetrieveUpdateAPIView)
+from rest_framework.generics import (ListCreateAPIView, CreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView)
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -77,3 +77,9 @@ class RetrieveUpdateUserView(RetrieveUpdateAPIView):
     def get_queryset(self):
         queryset = User.objects.all()
         return queryset
+
+
+class RetrieveProductView(RetrieveAPIView):
+    serializer_class = serializers.ProductSerializer
+    queryset = models.Product.objects.all()
+    permission_classes = (AllowAny,)

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'api',
+    'django_s3_storage'
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,27 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_STORAGE = 'django_s3_storage.storage.StaticS3Storage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEFAULT_FILE_STORAGE = 'django_s3_storage.storage.S3Storage'
+
+# AWS Settings
+# The AWS region to connect to.
+AWS_REGION = "ap-south-1"
+
+# The AWS access key to use.
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+
+# The AWS secret access key to use.
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+
+# The name of the bucket to store files in.
+AWS_S3_BUCKET_NAME = "django-shop-images-bucket"
+
+# AWS Static Files
+AWS_S3_BUCKET_NAME_STATIC = 'django-shop-images-bucket'

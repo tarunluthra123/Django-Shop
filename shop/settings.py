@@ -2,6 +2,8 @@ from datetime import timedelta
 from pathlib import Path
 
 import environ
+import django_heroku
+
 
 env = environ.Env()
 environ.Env.read_env()
@@ -148,3 +150,5 @@ AWS_S3_BUCKET_NAME = "django-shop-images-bucket"
 
 # AWS Static Files
 AWS_S3_BUCKET_NAME_STATIC = 'django-shop-images-bucket'
+
+django_heroku.settings(locals())

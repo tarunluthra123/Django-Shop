@@ -30,7 +30,10 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'api',
-    'django_s3_storage'
+    'django_s3_storage',
+    
+    'coreapi', # Coreapi for coreapi documentation
+    'drf_yasg', # drf_yasg fro Swagger documentation
 ]
 
 MIDDLEWARE = [
@@ -81,6 +84,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 # Password validation

@@ -6,13 +6,12 @@ from rest_framework.views import APIView
 
 from api import serializers, models
 
-
 class HelloView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [IsAuthenticated,]
 
     def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)
+        msg = 'Hello ' + request.user.first_name + ' ' + request.user.last_name
+        return Response({'msg': msg})
 
 
 class ProductsListView(ListCreateAPIView):
